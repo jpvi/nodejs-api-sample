@@ -49,7 +49,7 @@ SECRET_KEY=[secret key to sign and verify tokens, this can be anything]
 }
 ```
 
-2. You should receive a 200 if and a message indicating that you have successfully created the user.
+2. You should receive a message indicating that you have successfully created the user.
 
 ## Authentication (Postman - Users/Authenticate)
 
