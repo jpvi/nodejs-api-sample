@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ignore": ["src/components", "src/pages"],
+  "exec": "ts-node --project tsconfig.server.json src/index.ts",
+  "ext": "js ts"
+}

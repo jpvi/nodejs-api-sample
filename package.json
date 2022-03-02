@@ -1,0 +1,49 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "next build && tsc --project tsconfig.server.json",
+    "start": "node ./dist/index.js",
+    "dev": "nodemon"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "classnames": "2.*",
+    "dotenv": "10.*",
+    "express": "4.*",
+    "express-jwt": "6.*",
+    "glob": "7.*",
+    "ioredis": "4.*",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "0.95.*",
+    "mysql2": "^2.3.3",
+    "next": "11.*",
+    "node-fetch": "2.*",
+    "ramda": "^0.28.0",
+    "react": "17.*",
+    "react-dom": "17.*",
+    "react-virtuoso": "2.*",
+    "request-promise": "^4.2.6",
+    "uniqid": "^5.4.0",
+    "uuid": "8.*",
+    "uuidv4": "^6.2.12"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/classnames": "2.*",
+    "@types/express": "4.*",
+    "@types/express-jwt": "6.*",
+    "@types/glob": "7.*",
+    "@types/ioredis": "4.*",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/node-fetch": "2.*",
+    "@types/react": "17.*",
+    "@types/request-promise": "^4.1.48",
+    "@types/uuid": "8.*",
+    "autoprefixer": "10.*",
+    "nodemon": "2.*",
+    "postcss": "8.*",
+    "tailwindcss": "2.*",
+    "ts-node": "10.*",
+    "typescript": "4.*"
+  }
+}

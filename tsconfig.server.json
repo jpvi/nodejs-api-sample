@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "dist",
+    "target": "es6",
+    "isolatedModules": false,
+    "noEmit": false,
+    "strict": false
+  },
+  "include": [
+    "src/index.ts",
+    "src/lib/**/*",
+    "src/services/**/*"
+  ],
+  "exclude": ["dist", ".next", "node_modules"]
+}
