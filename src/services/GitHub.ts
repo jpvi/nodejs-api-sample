@@ -37,7 +37,7 @@ export const hook = async ({ server, db, redis }: HookContext): Promise<void> =>
         }
 
         // check if user list exceeds 10
-        if(users.length > userRequestLimit) {
+        if (users.length > userRequestLimit) {
             console.debug(
                 `Request failed => users parameter exceeds the limit. (Limit: ${userRequestLimit})`,
             )
@@ -56,36 +56,43 @@ export const hook = async ({ server, db, redis }: HookContext): Promise<void> =>
             if (user != undefined && user != null) {
                 returnUsers.push(user)
             } else {
-                // get github user
-                const ghUser = JSON.parse(await getUser(username))
-                if (ghUser != undefined && ghUser != null) {
+                try {
+                    // get github user
+                    const ghUser = JSON.parse(await getUser(username))
 
-                    // get github user repos
-                    const ghRepos = JSON.parse(await getUserRepos(username))
+                    if (ghUser != undefined && ghUser != null) {
 
-                    let average_repo_followers = 0
-                    if (ghRepos != undefined && ghRepos != null) {
-                        // compute for repo watchers
-                        let total_repo_followers = 0
-                        ghRepos.forEach(r => {
-                            total_repo_followers += r.watchers
-                        });
-                        average_repo_followers = Number(total_repo_followers / ghRepos.length)
+                        // get github user repos
+                        const ghRepos = JSON.parse(await getUserRepos(username))
+
+                        let average_repo_followers = 0
+                        if (ghRepos != undefined && ghRepos != null) {
+                            // compute for repo watchers
+                            let total_repo_followers = 0
+                            ghRepos.forEach(r => {
+                                total_repo_followers += r.watchers
+                            });
+                            average_repo_followers = Number(total_repo_followers / ghRepos.length)
+                        }
+
+                        // form user
+                        const newUser: TemporaryUser = {
+                            login: ghUser.login,
+                            name: ghUser.name,
+                            company: ghUser.company,
+                            followers: ghUser.followers,
+                            public_repos: ghUser.public_repos,
+                            average_repo_followers
+                        }
+                        // store the newly formed user
+                        await TemporaryUserStore.set(redis, newUser)
+
+                        returnUsers.push(newUser)
                     }
-
-                    // form user
-                    const newUser: TemporaryUser = {
-                        login: ghUser.login,
-                        name: ghUser.name,
-                        company: ghUser.company,
-                        followers: ghUser.followers,
-                        public_repos: ghUser.public_repos,
-                        average_repo_followers
-                    }
-                    // store the newly formed user
-                    await TemporaryUserStore.set(redis, newUser)
-
-                    returnUsers.push(newUser)
+                } catch (ex) {
+                    console.debug(`Get GitHub user => ${username} : ${ex}`)
+                } finally {
+                    continue
                 }
             }
         }
